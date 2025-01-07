@@ -96,13 +96,13 @@ namespace :decompose do
   end
 
   def docker_execute(*args)
-    execute('docker-compose', "--project-name #{fetch :application} -f #{fetch :decompose_compose_file}", *args)
+    execute('docker compose', "--project-name #{fetch :application} -f #{fetch :decompose_compose_file}", *args)
   end
 
   def docker_execute_interactively(host, command)
     user = host.user
     port = fetch(:port) || 22
-    docker_run = "docker-compose --project-name #{fetch :application}  -f #{fetch :decompose_compose_file} run --rm #{fetch :decompose_web_service} #{command}"
+    docker_run = "docker compose --project-name #{fetch :application}  -f #{fetch :decompose_compose_file} run --rm #{fetch :decompose_web_service} #{command}"
     exec "ssh -l #{user} #{host} -p #{port} -t 'cd #{deploy_to}/current && #{docker_run}'"
   end
 
